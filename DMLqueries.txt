@@ -1,0 +1,103 @@
+## 1. INSERT INTO Statements
+
+### Customers Table
+
+INSERT INTO customers (customer_id, name, email, phone, city)
+VALUES 
+(1, 'John Smith', 'john.smith@example.com', '555-123-4567', 'New York'),
+(2, 'Sarah Johnson', 'sarah.j@example.com', '555-987-6543', 'Chicago'),
+(3, 'Michael Brown', NULL, '555-456-7890', 'Los Angeles'),
+(4, 'Emily Davis', 'emily.d@example.com', NULL, 'Houston'),
+(5, 'Robert Wilson', 'robert.w@example.com', '555-789-0123', NULL);
+
+
+### Products Table
+
+INSERT INTO products (product_id, product_name, price)
+VALUES 
+(101, 'Laptop', 999.99),
+(102, 'Smartphone', 699.99),
+(103, 'Headphones', 149.99),
+(104, 'Tablet', 399.99),
+(105, 'Smartwatch', 199.99);
+
+
+### Orders Table
+
+INSERT INTO orders (order_id, customer_id, order_date)
+VALUES 
+(1001, 1, '2025-01-15'),
+(1002, 2, '2025-02-20'),
+(1003, 3, '2025-03-10'),
+(1004, 1, '2025-04-05'),
+(1005, 4, NULL);
+
+
+### Order Items Table
+
+INSERT INTO order_items (order_item_id, order_id, product_id, quantity)
+VALUES 
+(1, 1001, 101, 1),
+(2, 1001, 103, 2),
+(3, 1002, 102, 1),
+(4, 1003, 104, 1),
+(5, 1003, 105, 1),
+(6, 1004, 101, 1),
+(7, 1005, 103, 3);
+
+
+### Payments Table
+
+INSERT INTO payments (payment_id, order_id, amount_paid, payment_date)
+VALUES 
+(5001, 1001, 1299.97, '2025-01-16'),
+(5002, 1002, 699.99, '2025-02-21'),
+(5003, 1003, 599.98, NULL),
+(5004, 1004, 999.99, '2025-04-06'),
+(5005, 1005, 449.97, '2025-05-15');
+
+
+## 2. Handling Missing Values
+
+In the INSERT statements above, I've demonstrated handling missing values:
+- Used NULL for missing emails, phone numbers, cities, and dates
+- Allowed the database to use default values where appropriate (like auto-increment IDs if configured)
+
+## 3. UPDATE and DELETE Statements
+
+### UPDATE Examples
+
+-- Update a customer's email
+UPDATE customers 
+SET email = 'michael.b@example.com' 
+WHERE customer_id = 3;
+
+-- Update payment date for a payment that was previously NULL
+UPDATE payments 
+SET payment_date = '2025-03-12' 
+WHERE payment_id = 5003;
+
+-- Update product price
+UPDATE products 
+SET price = 179.99 
+WHERE product_id = 103;
+
+
+### DELETE Examples
+
+-- Delete a customer who hasn't placed any orders
+DELETE FROM customers 
+WHERE customer_id = 5 
+AND NOT EXISTS (SELECT 1 FROM orders WHERE customer_id = 5);
+
+-- Delete an order item that was added by mistake
+DELETE FROM order_items 
+WHERE order_item_id = 7 
+AND order_id = 1005;
+
+-- Delete payments for orders that were cancelled
+DELETE FROM payments 
+WHERE order_id IN (SELECT order_id FROM orders WHERE order_date IS NULL);
+
+
+These SQL statements demonstrate proper DML operations (INSERT, UPDATE, DELETE) while handling NULL values appropriately. 
