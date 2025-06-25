@@ -1,133 +1,76 @@
-# DML_and_NULL_Handling
+# DML_and_NULL_Handling – MySQL Project
 
-# 🧾 DML and NULL Handling – MySQL Project
-
-This repository demonstrates practical usage of **Data Manipulation Language (DML)** operations in MySQL, along with **NULL handling**, using an e-commerce-style database with customers, products, orders, order items, and payments.
-
-This is ideal for understanding how to insert, update, delete data while handling missing values correctly and efficiently.
+This repository showcases the use of **Data Manipulation Language (DML)** operations in **MySQL**, along with effective handling of **NULL values**. The database simulates a mini e-commerce system involving customers, products, orders, order items, and payments.
 
 ---
 
 ## 📦 Tables Involved
 
-- **Customers**: Buyer information (name, email, phone, city)
-- **Products**: Product catalog (name and price)
-- **Orders**: Tracks orders placed by customers
-- **Order_Items**: Links products to orders with quantity
-- **Payments**: Tracks payment made for orders
+- **Customers**: Contains buyer details including optional fields like email, phone, and city.
+- **Products**: Stores product information such as name and price.
+- **Orders**: Tracks orders placed by customers; some orders may have missing order dates.
+- **Order Items**: Connects products to orders with quantity details.
+- **Payments**: Captures payment amounts and dates; some records have missing payment dates.
 
 ---
 
-## 🔹 1. INSERT INTO Statements (with NULL Handling)
+## 🔹 1. INSERT Operations
 
-✅ Customers Table
+Sample data was inserted into all tables, including scenarios where some fields were deliberately left **NULL** (e.g., missing emails, phone numbers, order dates, and payment dates). This helps simulate real-world situations where user or system data might be incomplete.
 
-INSERT INTO customers (customer_id, name, email, phone, city)
-VALUES 
-(1, 'John Smith', 'john.smith@example.com', '555-123-4567', 'New York'),
-(2, 'Sarah Johnson', 'sarah.j@example.com', '555-987-6543', 'Chicago'),
-(3, 'Michael Brown', NULL, '555-456-7890', 'Los Angeles'),
-(4, 'Emily Davis', 'emily.d@example.com', NULL, 'Houston'),
-(5, 'Robert Wilson', 'robert.w@example.com', '555-789-0123', NULL);
+---
 
-✅ Products Table
+## 🔸 2. Handling Missing Values
 
-INSERT INTO products (product_id, product_name, price)
-VALUES 
-(101, 'Laptop', 999.99),
-(102, 'Smartphone', 699.99),
-(103, 'Headphones', 149.99),
-(104, 'Tablet', 399.99),
-(105, 'Smartwatch', 199.99);
+The project demonstrates how databases handle **NULL values**:
+- Allowing optional data entry for certain fields
+- Using `NULL` where values are unknown or unavailable
+- Preparing the database to accept incomplete but valid data entries
 
-✅ Orders Table
+---
 
-INSERT INTO orders (order_id, customer_id, order_date)
-VALUES 
-(1001, 1, '2025-01-15'),
-(1002, 2, '2025-02-20'),
-(1003, 3, '2025-03-10'),
-(1004, 1, '2025-04-05'),
-(1005, 4, NULL); -- NULL order date
+## ✏️ 3. UPDATE Operations
 
-✅ Order Items Table
+Several updates were made to:
+- Correct missing or incorrect customer emails
+- Add missing payment dates
+- Update product prices
 
-INSERT INTO order_items (order_item_id, order_id, product_id, quantity)
-VALUES 
-(1, 1001, 101, 1),
-(2, 1001, 103, 2),
-(3, 1002, 102, 1),
-(4, 1003, 104, 1),
-(5, 1003, 105, 1),
-(6, 1004, 101, 1),
-(7, 1005, 103, 3); -- Added by mistake, deleted later
+These updates show how to safely modify existing records, including fields with `NULL` values.
 
-✅ Payments Table
+---
 
-INSERT INTO payments (payment_id, order_id, amount_paid, payment_date)
-VALUES 
-(5001, 1001, 1299.97, '2025-01-16'),
-(5002, 1002, 699.99, '2025-02-21'),
-(5003, 1003, 599.98, NULL), -- Payment date missing
-(5004, 1004, 999.99, '2025-04-06'),
-(5005, 1005, 449.97, '2025-05-15');
+## 🗑️ 4. DELETE Operations
 
-🔸 2. Handling NULL Values
-This project includes deliberate use of NULL to represent missing or optional data:
+Examples include:
+- Deleting customers who haven't placed any orders
+- Removing incorrectly added order items
+- Deleting payments related to cancelled (null-dated) orders
 
-Missing emails, phone numbers, cities in the Customers table
+These cases illustrate safe deletion while ensuring database consistency and referential integrity.
 
-Missing order dates in the Orders table
+---
 
-Missing payment dates in the Payments table
+## 💡 Learning Outcomes
 
-This shows how real-world data can have gaps and how to design your database to handle it gracefully.
+- Understanding of DML operations: **INSERT**, **UPDATE**, **DELETE**
+- Proper handling and use of **NULL values**
+- Writing queries for real-world use cases with incomplete data
+- Maintaining database reliability and accuracy
 
-✏️ 3. UPDATE Statements
--- Update a customer's email
-UPDATE customers 
-SET email = 'michael.b@example.com' 
-WHERE customer_id = 3;
+---
 
--- Fix missing payment date
-UPDATE payments 
-SET payment_date = '2025-03-12' 
-WHERE payment_id = 5003;
+## 🛠 Tools Used
 
--- Change price of a product
-UPDATE products 
-SET price = 179.99 
-WHERE product_id = 103;
+- MySQL 8.x
+- MySQL Workbench
+- GitHub
 
-🗑️ 4. DELETE Statements
--- Remove customer with no orders
-DELETE FROM customers 
-WHERE customer_id = 5 
-AND NOT EXISTS (SELECT 1 FROM orders WHERE customer_id = 5);
+---
 
--- Delete mistakenly added order item
-DELETE FROM order_items 
-WHERE order_item_id = 7 
-AND order_id = 1005;
+## 🙋‍♀️ Author
 
--- Remove payments for cancelled orders (where order_date is NULL)
-DELETE FROM payments 
-WHERE order_id IN (SELECT order_id FROM orders WHERE order_date IS NULL);
-💡 Learning Objectives
-Practice DML operations: INSERT, UPDATE, DELETE
-
-Understand how to work with NULL values in databases
-
-Learn to write safe and accurate SQL queries
-
-Handle real-world data inconsistencies
-
-🛠 Tools Used
-MySQL Workbench
-GitHub
-
-🙋‍♀️ Author
-Gauri Milind Javheri
+**Gauri Milind Javheri**  
 Internship Project – DML & NULL Handling in MySQL
 
 
