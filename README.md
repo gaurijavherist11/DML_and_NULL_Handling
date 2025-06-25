@@ -29,7 +29,9 @@ VALUES
 (3, 'Michael Brown', NULL, '555-456-7890', 'Los Angeles'),
 (4, 'Emily Davis', 'emily.d@example.com', NULL, 'Houston'),
 (5, 'Robert Wilson', 'robert.w@example.com', '555-789-0123', NULL);
+
 ✅ Products Table
+
 INSERT INTO products (product_id, product_name, price)
 VALUES 
 (101, 'Laptop', 999.99),
@@ -37,10 +39,9 @@ VALUES
 (103, 'Headphones', 149.99),
 (104, 'Tablet', 399.99),
 (105, 'Smartwatch', 199.99);
+
 ✅ Orders Table
-sql
-Copy
-Edit
+
 INSERT INTO orders (order_id, customer_id, order_date)
 VALUES 
 (1001, 1, '2025-01-15'),
@@ -48,10 +49,9 @@ VALUES
 (1003, 3, '2025-03-10'),
 (1004, 1, '2025-04-05'),
 (1005, 4, NULL); -- NULL order date
+
 ✅ Order Items Table
-sql
-Copy
-Edit
+
 INSERT INTO order_items (order_item_id, order_id, product_id, quantity)
 VALUES 
 (1, 1001, 101, 1),
@@ -61,7 +61,9 @@ VALUES
 (5, 1003, 105, 1),
 (6, 1004, 101, 1),
 (7, 1005, 103, 3); -- Added by mistake, deleted later
+
 ✅ Payments Table
+
 INSERT INTO payments (payment_id, order_id, amount_paid, payment_date)
 VALUES 
 (5001, 1001, 1299.97, '2025-01-16'),
@@ -121,10 +123,7 @@ Learn to write safe and accurate SQL queries
 Handle real-world data inconsistencies
 
 🛠 Tools Used
-MySQL 8.x
-
 MySQL Workbench
-
 GitHub
 
 🙋‍♀️ Author
